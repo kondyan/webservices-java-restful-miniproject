@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="https://jakarta.ee/xml/ns/persistence"
+             xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence
+                                 https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
+             version="3.0">
+
+  <persistence-unit name="EmployeePU" transaction-type="RESOURCE_LOCAL">
+
+    <!-- JPA Provider (Hibernate als Implementierung) -->
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <!-- Entity-Klassen -->
+    <class>org.example.websevices.model.Employee</class>
+
+    <!-- Properties für Datenbankverbindung und JPA-Konfiguration -->
+    <properties>
+      <!-- JDBC Connection Properties -->
+      <property name="jakarta.persistence.jdbc.driver"
+                value="com.mysql.cj.jdbc.Driver"/>
+
+      <!-- WICHTIG: createDatabaseIfNotExist=true erstellt die Datenbank automatisch! -->
+      <property name="jakarta.persistence.jdbc.url"
+                value="jdbc:mysql://localhost:3306/employeeManagement?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
+
+      <property name="jakarta.persistence.jdbc.user" value="root"/>
+      <property name="jakarta.persistence.jdbc.password" value="hello12345"/>
+
+
+      <!-- Hibernate Dialect -->
+      <!--      <property name="hibernate.dialect"-->
+      <!--                value="org.hibernate.dialect.MySQL8Dialect"/>-->
+
+      <!-- ============================================== -->
+      <!-- AUTOMATISCHE SCHEMA- UND TABELLEN-ERSTELLUNG  -->
+      <!-- ============================================== -->
+      <!-- update: Erstellt Schema/Tabellen beim ersten Start,   -->
+      <!--         aktualisiert bei Änderungen, behält Daten     -->
+      <!-- create: Erstellt neu bei JEDEM Start (Daten weg!)     -->
+      <!-- create-drop: Erstellt beim Start, löscht beim Beenden -->
+      <!-- validate: Nur validieren, keine Änderungen            -->
+      <!-- ============================================== -->
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+
+      <!-- SQL-Statements in der Konsole anzeigen (hilfreich beim Lernen) -->
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.format_sql" value="true"/>
+
+      <!-- Connection Pool -->
+      <property name="hibernate.connection.pool_size" value="10"/>
+
+      <!-- Zeitzone für JDBC -->
+      <property name="hibernate.jdbc.time_zone" value="UTC"/>
+
+      <!-- SQL-Kommentare anzeigen -->
+      <property name="hibernate.use_sql_comments" value="true"/>
+    </properties>
+
+  </persistence-unit>
+
+</persistence>

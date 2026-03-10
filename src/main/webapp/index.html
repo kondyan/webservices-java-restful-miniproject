@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    content="width=device-width, initial-scale=1.0"
+    name="viewport"
+  />
+  <title>Employee Admin Panel</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #0a0c10;
+      --surface: #111318;
+      --surface2: #181b22;
+      --border: #1f2330;
+      --accent: #00e5a0;
+      --accent2: #0077ff;
+      --danger: #ff3e5e;
+      --warn: #ffb020;
+      --text: #e8eaf0;
+      --muted: #5a6080;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      display: flex;
+      overflow-x: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      min-height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 28px 24px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-logo h1 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--accent);
+    }
+
+    .sidebar-logo span {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      padding: 16px 12px;
+      flex: 1;
+    }
+
+    .nav-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 8px 12px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--muted);
+      transition: all 0.15s;
+      margin-bottom: 2px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: var(--surface2);
+      color: var(--text);
+    }
+
+    .nav-item.active {
+      background: rgba(0, 229, 160, 0.08);
+      color: var(--accent);
+    }
+
+    .nav-item .icon {
+      font-size: 16px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .sidebar-status {
+      padding: 16px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      margin-right: 6px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.4;
+      }
+    }
+
+    /* Main */
+    .main {
+      margin-left: 220px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .api-badge {
+      font-size: 10px;
+      background: rgba(0, 119, 255, 0.12);
+      color: var(--accent2);
+      border: 1px solid rgba(0, 119, 255, 0.25);
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 1px;
+    }
+
+    .content {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* Cards row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .stat-card.blue::before {
+      background: var(--accent2);
+    }
+
+    .stat-card.warn::before {
+      background: var(--warn);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 30px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    /* Grid layout */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    /* Panel */
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .panel-title {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-badge {
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 1px;
+    }
+
+    .badge-get {
+      background: rgba(0, 229, 160, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 160, 0.25);
+    }
+
+    .badge-post {
+      background: rgba(0, 119, 255, 0.12);
+      color: var(--accent2);
+      border: 1px solid rgba(0, 119, 255, 0.25);
+    }
+
+    .badge-delete {
+      background: rgba(255, 62, 94, 0.12);
+      color: var(--danger);
+      border: 1px solid rgba(255, 62, 94, 0.25);
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    /* Form elements */
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+
+    label {
+      font-size: 10px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    input {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      padding: 10px 14px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+    }
+
+    input::placeholder {
+      color: var(--muted);
+    }
+
+    .form-inline {
+      display: flex;
+      gap: 10px;
+    }
+
+    .form-inline input {
+      flex: 1;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+
+    .btn-accent {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .btn-accent:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-blue {
+      background: var(--accent2);
+      color: #fff;
+    }
+
+    .btn-blue:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .btn-danger:hover {
+      opacity: 0.85;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: var(--surface2);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-full {
+      width: 100%;
+      margin-top: 4px;
+    }
+
+    /* Table */
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead th {
+      text-align: left;
+      padding: 10px 16px;
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.1s;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background: var(--surface2);
+    }
+
+    td {
+      padding: 12px 16px;
+      color: var(--text);
+    }
+
+    td .id-chip {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .salary-chip {
+      background: rgba(0, 229, 160, 0.08);
+      color: var(--accent);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 12px;
+    }
+
+    /* Response box */
+    .response-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 12px;
+      min-height: 60px;
+      white-space: pre-wrap;
+      word-break: break-all;
+      color: var(--accent);
+      font-family: var(--font-mono);
+      margin-top: 14px;
+      max-height: 160px;
+      overflow-y: auto;
+    }
+
+    .response-box.error {
+      color: var(--danger);
+    }
+
+    .response-box.idle {
+      color: var(--muted);
+    }
+
+    /* Toast */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 13px;
+      color: var(--text);
+      z-index: 999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      animation: slideUp 0.2s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Loader */
+    .loader {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      margin-left: 8px;
+      vertical-align: middle;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Endpoint tag */
+    .endpoint-tag {
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <h1>EMP//ADMIN</h1>
+    <span>REST Control Panel</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-label">Endpoints</div>
+    <button
+      class="nav-item active"
+      onclick="showSection('all')"
+    >
+      <span class="icon">⬡</span> All Employees
+    </button>
+    <button
+      class="nav-item"
+      onclick="showSection('find')"
+    >
+      <span class="icon">◎</span> Find Employee
+    </button>
+    <button
+      class="nav-item"
+      onclick="showSection('create')"
+    >
+      <span class="icon">＋</span> Create
+    </button>
+    <button
+      class="nav-item"
+      onclick="showSection('delete')"
+    >
+      <span class="icon">✕</span> Delete
+    </button>
+    <div
+      class="nav-label"
+      style="margin-top:12px;"
+    >Info
+    </div>
+    <button
+      class="nav-item"
+      onclick="showSection('docs')"
+    >
+      <span class="icon">≡</span> API Docs
+    </button>
+  </nav>
+  <div class="sidebar-status">
+    <span class="status-dot"></span>
+    Connected &nbsp;·&nbsp; /employee
+  </div>
+</aside>
+
+<!-- Main Content -->
+<main class="main">
+  <header class="topbar">
+    <span
+      class="topbar-title"
+      id="page-title"
+    >All Employees</span>
+    <div class="topbar-right">
+      <span class="api-badge">REST/JSON</span>
+      <input
+        id="base-url-input"
+        placeholder="http://localhost:8080/"
+        style="width:260px;padding:6px 12px;font-size:12px;"
+        value="http://localhost:8080/"
+      />
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-label">Total Employees</div>
+        <div
+          class="stat-value"
+          id="stat-total"
+        >—
+        </div>
+      </div>
+      <div class="stat-card blue">
+        <div class="stat-label">Last Response</div>
+        <div
+          class="stat-value"
+          id="stat-status"
+        >—
+        </div>
+      </div>
+      <div class="stat-card warn">
+        <div class="stat-label">Avg. Salary</div>
+        <div
+          class="stat-value"
+          id="stat-avg"
+        >—
+        </div>
+      </div>
+    </div>
+
+    <!-- === ALL EMPLOYEES === -->
+    <div id="section-all">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">
+            <span class="method-badge badge-get">GET</span>
+            Employee List
+          </span>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span class="endpoint-tag">GET /employee</span>
+            <button
+              class="btn btn-accent"
+              onclick="loadAll()"
+            >↺ Refresh
+            </button>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Salary</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="employee-table-body">
+              <tr>
+                <td
+                  colspan="4"
+                  style="color:var(--muted);text-align:center;padding:30px;"
+                >Click Refresh to load employees
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- === FIND === -->
+    <div
+      class="hidden"
+      id="section-find"
+    >
+      <div class="grid-2">
+        <!-- By ID -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">
+              <span class="method-badge badge-get">GET</span> Find by ID
+            </span>
+            <span class="endpoint-tag">GET /employee/{id}</span>
+          </div>
+          <div class="panel-body">
+            <div class="form-row">
+              <label>Employee ID</label>
+              <div class="form-inline">
+                <input
+                  id="find-id-input"
+                  placeholder="e.g. 42"
+                  type="number"
+                />
+                <button
+                  class="btn btn-accent"
+                  onclick="findById()"
+                >Search
+                </button>
+              </div>
+            </div>
+            <div
+              class="response-box idle"
+              id="find-id-result"
+            >// response will appear here
+            </div>
+          </div>
+        </div>
+
+        <!-- By Name -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">
+              <span class="method-badge badge-get">GET</span> Find by Name
+            </span>
+            <span class="endpoint-tag">GET /employee/search?name=</span>
+          </div>
+          <div class="panel-body">
+            <div class="form-row">
+              <label>Name</label>
+              <div class="form-inline">
+                <input
+                  id="find-name-input"
+                  placeholder="e.g. Anna"
+                  type="text"
+                />
+                <button
+                  class="btn btn-accent"
+                  onclick="findByName()"
+                >Search
+                </button>
+              </div>
+            </div>
+            <div
+              class="response-box idle"
+              id="find-name-result"
+            >// response will appear here
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === CREATE === -->
+    <div
+      class="hidden"
+      id="section-create"
+    >
+      <div
+        class="panel"
+        style="max-width:520px;"
+      >
+        <div class="panel-header">
+          <span class="panel-title">
+            <span class="method-badge badge-post">POST</span> Create Employee
+          </span>
+          <span class="endpoint-tag">POST /employee/create</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-row">
+            <label>Full Name</label>
+            <input
+              id="create-name"
+              placeholder="e.g. Maria Schmidt"
+              type="text"
+            />
+          </div>
+          <div class="form-row">
+            <label>Salary (€)</label>
+            <input
+              id="create-salary"
+              placeholder="e.g. 55000"
+              type="number"
+            />
+          </div>
+          <button
+            class="btn btn-blue btn-full"
+            onclick="createEmployee()"
+          >＋ Create Employee
+          </button>
+          <div
+            class="response-box idle"
+            id="create-result"
+          >// response will appear here
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === DELETE === -->
+    <div
+      class="hidden"
+      id="section-delete"
+    >
+      <div
+        class="panel"
+        style="max-width:480px;"
+      >
+        <div class="panel-header">
+          <span class="panel-title">
+            <span class="method-badge badge-delete">DELETE</span> Delete Employee
+          </span>
+          <span class="endpoint-tag">DELETE /employee/{id}</span>
+        </div>
+        <div class="panel-body">
+          <div class="form-row">
+            <label>Employee ID</label>
+            <div class="form-inline">
+              <input
+                id="delete-id"
+                placeholder="e.g. 42"
+                type="number"
+              />
+              <button
+                class="btn btn-danger"
+                onclick="deleteEmployee()"
+              >✕ Delete
+              </button>
+            </div>
+          </div>
+          <div
+            class="response-box idle"
+            id="delete-result"
+          >// response will appear here
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- === DOCS === -->
+    <div
+      class="hidden"
+      id="section-docs"
+    >
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">⬡ API Reference</span>
+          <span class="api-badge">EmployeeResource.java</span>
+        </div>
+        <div class="panel-body">
+          <table>
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Path</th>
+                <th>Params</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="method-badge badge-get">GET</span></td>
+                <td><code>/employee</code></td>
+                <td>—</td>
+                <td>Returns all employees</td>
+              </tr>
+              <tr>
+                <td><span class="method-badge badge-get">GET</span></td>
+                <td><code>/employee/{id}</code></td>
+                <td>@PathParam id</td>
+                <td>Find employee by ID</td>
+              </tr>
+              <tr>
+                <td><span class="method-badge badge-get">GET</span></td>
+                <td><code>/employee/search</code></td>
+                <td>@QueryParam name</td>
+                <td>Find employee by name</td>
+              </tr>
+              <tr>
+                <td><span class="method-badge badge-post">POST</span></td>
+                <td><code>/employee/create</code></td>
+                <td>id, name, salary (form)</td>
+                <td>Create new employee</td>
+              </tr>
+              <tr>
+                <td><span class="method-badge badge-delete">DELETE</span></td>
+                <td><code>/employee/{id}</code></td>
+                <td>@PathParam id</td>
+                <td>Delete employee by ID</td>
+              </tr>
+            </tbody>
+          </table>
+          <div style="margin-top:20px;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);">
+            <strong style="color:var(--accent);">Content-Type:</strong> application/json (GET/DELETE) &nbsp;|&nbsp;
+            <strong style="color:var(--accent2);">Content-Type:</strong> application/x-www-form-urlencoded (POST)
+            <br /><br />
+            <strong style="color:var(--text);">Base URL:</strong> &nbsp;Set in the top right input field.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+  const BASE = () => document.getElementById('base-url-input').value.replace(/\/$/, '');
+
+  /* --- Navigation --- */
+  const sections = ['all', 'find', 'create', 'delete', 'docs'];
+  const titles = {
+    all: 'All Employees',
+    find: 'Find Employee',
+    create: 'Create Employee',
+    delete: 'Delete Employee',
+    docs: 'API Docs'
+  };
+
+  function showSection(name) {
+    sections.forEach(s => document.getElementById('section-' + s).classList.add('hidden'));
+    document.getElementById('section-' + name).classList.remove('hidden');
+    document.getElementById('page-title').textContent = titles[name];
+    document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+    if (name === 'all') loadAll();
+  }
+
+  /* --- Toast --- */
+  function toast(msg, ok = true) {
+    const t = document.getElementById('toast');
+    t.innerHTML = `<span style="color:${ok ? 'var(--accent)' : 'var(--danger)'}">●</span> ${msg}`;
+    t.style.display = 'flex';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => t.style.display = 'none', 3000);
+  }
+
+  /* --- Set response box --- */
+  function setBox(id, data, ok = true) {
+    const box = document.getElementById(id);
+    box.textContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+    box.className = 'response-box ' + (ok ? '' : 'error');
+  }
+
+  /* --- Stats --- */
+  function updateStats(employees) {
+    document.getElementById('stat-total').textContent = employees.length;
+    if (employees.length) {
+      const avg = Math.round(employees.reduce((a, e) => a + (e.salary || 0), 0) / employees.length);
+      document.getElementById('stat-avg').textContent = '€' + avg.toLocaleString();
+    } else {
+      document.getElementById('stat-avg').textContent = '—';
+    }
+  }
+
+  /* --- Load All --- */
+  async function loadAll() {
+    const tbody = document.getElementById('employee-table-body');
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:28px;">Loading<span class="loader"></span></td></tr>`;
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee`);
+      document.getElementById('stat-status').textContent = res.status;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const employees = await res.json();
+      updateStats(employees);
+      if (!employees.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:28px;">No employees found</td></tr>`;
+        return;
+      }
+      tbody.innerHTML = employees.map(e => `
+        <tr>
+          <td><span class="id-chip">#${e.id}</span></td>
+          <td>${e.name ?? '—'}</td>
+          <td><span class="salary-chip">€${(e.salary ?? 0).toLocaleString()}</span></td>
+          <td>
+            <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px;" onclick="quickDelete(${e.id})">✕ Remove</button>
+          </td>
+        </tr>
+      `).join('');
+      toast(`Loaded ${employees.length} employees`);
+    } catch (err) {
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--danger);padding:28px;">Error: ${err.message}</td></tr>`;
+      toast(err.message, false);
+    }
+  }
+
+  /* --- Find by ID --- */
+  async function findById() {
+    const id = document.getElementById('find-id-input').value.trim();
+    if (!id) return toast('Enter an ID', false);
+    setBox('find-id-result', 'Loading…');
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`);
+      document.getElementById('stat-status').textContent = res.status;
+      const data = await res.json().catch(() => ({}));
+      setBox('find-id-result', data, res.ok);
+      toast(res.ok ? `Found employee #${id}` : `Not found (${res.status})`, res.ok);
+    } catch (e) {
+      setBox('find-id-result', e.message, false);
+      toast(e.message, false);
+    }
+  }
+
+  /* --- Find by Name --- */
+  async function findByName() {
+    const name = document.getElementById('find-name-input').value.trim();
+    if (!name) return toast('Enter a name', false);
+    setBox('find-name-result', 'Loading…');
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/search?name=${encodeURIComponent(name)}`);
+      document.getElementById('stat-status').textContent = res.status;
+      const data = await res.json().catch(() => ({}));
+      setBox('find-name-result', data, res.ok);
+      toast(res.ok ? `Found: ${name}` : `Not found (${res.status})`, res.ok);
+    } catch (e) {
+      setBox('find-name-result', e.message, false);
+      toast(e.message, false);
+    }
+  }
+
+  /* --- Create --- */
+  async function createEmployee() {
+    const name = document.getElementById('create-name').value.trim();
+    const salary = document.getElementById('create-salary').value.trim();
+    if (!name || !salary) return toast('Fill all fields', false);
+
+    setBox('create-result', 'Sending…');
+    const body = new URLSearchParams({name, salary});
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/create`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body
+      });
+      document.getElementById('stat-status').textContent = res.status;
+      const data = await res.json().catch(() => ({}));
+      setBox('create-result', data, res.ok);
+      toast(res.ok ? `Employee created ✓` : `Error ${res.status}`, res.ok);
+    } catch (e) {
+      setBox('create-result', e.message, false);
+      toast(e.message, false);
+    }
+  }
+
+  /* --- Delete --- */
+  async function deleteEmployee() {
+    const id = document.getElementById('delete-id').value.trim();
+    if (!id) return toast('Enter an ID', false);
+    await doDelete(id, 'delete-result');
+  }
+
+  async function quickDelete(id) {
+    if (!confirm(`Delete employee #${id}?`)) return;
+    await doDelete(id, null);
+    loadAll();
+  }
+
+  async function doDelete(id, boxId) {
+    if (boxId) setBox(boxId, 'Deleting…');
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {method: 'DELETE'});
+      document.getElementById('stat-status').textContent = res.status;
+      const data = await res.json().catch(() => ({}));
+      if (boxId) setBox(boxId, data, res.ok);
+      toast(res.ok ? `Employee #${id} deleted` : `Error ${res.status}`, res.ok);
+    } catch (e) {
+      if (boxId) setBox(boxId, e.message, false);
+      toast(e.message, false);
+    }
+  }
+
+  // Load on startup
+  loadAll();
+</script>
+</body>
+</html>
