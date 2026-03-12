@@ -42,7 +42,6 @@
       overflow-x: hidden;
     }
 
-    /* Sidebar */
     .sidebar {
       width: 220px;
       min-height: 100vh;
@@ -65,7 +64,6 @@
       font-family: var(--font-display);
       font-size: 18px;
       font-weight: 800;
-      letter-spacing: -0.5px;
       color: var(--accent);
     }
 
@@ -116,12 +114,6 @@
       color: var(--accent);
     }
 
-    .nav-item .icon {
-      font-size: 16px;
-      width: 20px;
-      text-align: center;
-    }
-
     .sidebar-status {
       padding: 16px;
       border-top: 1px solid var(--border);
@@ -148,7 +140,6 @@
       }
     }
 
-    /* Main */
     .main {
       margin-left: 220px;
       flex: 1;
@@ -198,7 +189,6 @@
       flex: 1;
     }
 
-    /* Cards row */
     .stats-row {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -248,7 +238,6 @@
       color: var(--text);
     }
 
-    /* Grid layout */
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -256,7 +245,6 @@
       margin-bottom: 20px;
     }
 
-    /* Panel */
     .panel {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -308,11 +296,16 @@
       border: 1px solid rgba(255, 62, 94, 0.25);
     }
 
+    .badge-put {
+      background: rgba(255, 176, 32, 0.12);
+      color: var(--warn);
+      border: 1px solid rgba(255, 176, 32, 0.25);
+    }
+
     .panel-body {
       padding: 20px;
     }
 
-    /* Form elements */
     .form-row {
       display: flex;
       flex-direction: column;
@@ -344,20 +337,6 @@
       border-color: var(--accent);
     }
 
-    input::placeholder {
-      color: var(--muted);
-    }
-
-    .form-inline {
-      display: flex;
-      gap: 10px;
-    }
-
-    .form-inline input {
-      flex: 1;
-    }
-
-    /* Buttons */
     .btn {
       padding: 10px 18px;
       border-radius: 8px;
@@ -366,9 +345,7 @@
       font-family: var(--font-mono);
       font-size: 12px;
       font-weight: 700;
-      letter-spacing: 0.5px;
       transition: all 0.15s;
-      white-space: nowrap;
     }
 
     .btn-accent {
@@ -376,29 +353,14 @@
       color: #000;
     }
 
-    .btn-accent:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
-    }
-
     .btn-blue {
       background: var(--accent2);
       color: #fff;
     }
 
-    .btn-blue:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
-    }
-
     .btn-danger {
       background: var(--danger);
       color: #fff;
-    }
-
-    .btn-danger:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
     }
 
     .btn-ghost {
@@ -407,19 +369,9 @@
       border: 1px solid var(--border);
     }
 
-    .btn-ghost:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
     .btn-full {
       width: 100%;
       margin-top: 4px;
-    }
-
-    /* Table */
-    .table-wrap {
-      overflow-x: auto;
     }
 
     table {
@@ -438,25 +390,12 @@
       border-bottom: 1px solid var(--border);
     }
 
-    tbody tr {
-      border-bottom: 1px solid var(--border);
-      transition: background 0.1s;
-    }
-
-    tbody tr:last-child {
-      border-bottom: none;
-    }
-
-    tbody tr:hover {
-      background: var(--surface2);
-    }
-
     td {
       padding: 12px 16px;
       color: var(--text);
     }
 
-    td .id-chip {
+    .id-chip {
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 4px;
@@ -473,7 +412,6 @@
       font-size: 12px;
     }
 
-    /* Response box */
     .response-box {
       background: var(--bg);
       border: 1px solid var(--border);
@@ -482,9 +420,7 @@
       font-size: 12px;
       min-height: 60px;
       white-space: pre-wrap;
-      word-break: break-all;
       color: var(--accent);
-      font-family: var(--font-mono);
       margin-top: 14px;
       max-height: 160px;
       overflow-y: auto;
@@ -498,7 +434,6 @@
       color: var(--muted);
     }
 
-    /* Toast */
     #toast {
       position: fixed;
       bottom: 28px;
@@ -514,21 +449,21 @@
       align-items: center;
       gap: 10px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-      animation: slideUp 0.2s ease;
     }
 
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .hidden {
+      display: none !important;
     }
 
-    /* Loader */
+    .endpoint-tag {
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 8px;
+    }
+
     .loader {
       display: inline-block;
       width: 12px;
@@ -546,56 +481,35 @@
         transform: rotate(360deg);
       }
     }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* Endpoint tag */
-    .endpoint-tag {
-      font-size: 10px;
-      color: var(--muted);
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 2px 8px;
-      font-family: var(--font-mono);
-    }
   </style>
 </head>
 <body>
 
-<!-- Sidebar -->
 <aside class="sidebar">
   <div class="sidebar-logo">
     <h1>EMP//ADMIN</h1>
-    <span>REST Control Panel</span>
-  </div>
+    <span>REST Control Panel</span></div>
   <nav class="sidebar-nav">
     <div class="nav-label">Endpoints</div>
     <button
       class="nav-item active"
       onclick="showSection('all')"
-    >
-      <span class="icon">⬡</span> All Employees
+    ><span class="icon">⬡</span> All Employees
     </button>
     <button
       class="nav-item"
       onclick="showSection('find')"
-    >
-      <span class="icon">◎</span> Find Employee
+    ><span class="icon">◎</span> Find Employee
     </button>
     <button
       class="nav-item"
       onclick="showSection('create')"
-    >
-      <span class="icon">＋</span> Create
+    ><span class="icon">＋</span> Create
     </button>
     <button
       class="nav-item"
       onclick="showSection('delete')"
-    >
-      <span class="icon">✕</span> Delete
+    ><span class="icon">✕</span> Delete
     </button>
     <div
       class="nav-label"
@@ -605,17 +519,14 @@
     <button
       class="nav-item"
       onclick="showSection('docs')"
-    >
-      <span class="icon">≡</span> API Docs
+    ><span class="icon">≡</span> API Docs
     </button>
   </nav>
   <div class="sidebar-status">
-    <span class="status-dot"></span>
-    Connected &nbsp;·&nbsp; /employee
+    <span class="status-dot"></span>Connected &nbsp;·&nbsp; /employee
   </div>
 </aside>
 
-<!-- Main Content -->
 <main class="main">
   <header class="topbar">
     <span
@@ -626,7 +537,6 @@
       <span class="api-badge">REST/JSON</span>
       <input
         id="base-url-input"
-        placeholder="http://localhost:8080/"
         style="width:260px;padding:6px 12px;font-size:12px;"
         value="http://localhost:8080/"
       />
@@ -634,8 +544,6 @@
   </header>
 
   <div class="content">
-
-    <!-- Stats -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Total Employees</div>
@@ -646,7 +554,7 @@
         </div>
       </div>
       <div class="stat-card blue">
-        <div class="stat-label">Last Response</div>
+        <div class="stat-label">Last Status</div>
         <div
           class="stat-value"
           id="stat-status"
@@ -663,68 +571,45 @@
       </div>
     </div>
 
-    <!-- === ALL EMPLOYEES === -->
     <div id="section-all">
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">
-            <span class="method-badge badge-get">GET</span>
-            Employee List
-          </span>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <span class="endpoint-tag">GET /employee</span>
-            <button
-              class="btn btn-accent"
-              onclick="loadAll()"
-            >↺ Refresh
-            </button>
-          </div>
+          <span class="panel-title"><span class="method-badge badge-get">GET</span> Employee List</span>
+          <button
+            class="btn btn-accent"
+            onclick="loadAll()"
+          >↺ Refresh
+          </button>
         </div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Salary</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody id="employee-table-body">
-              <tr>
-                <td
-                  colspan="4"
-                  style="color:var(--muted);text-align:center;padding:30px;"
-                >Click Refresh to load employees
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Salary</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="employee-table-body"></tbody>
+        </table>
       </div>
     </div>
 
-    <!-- === FIND === -->
     <div
       class="hidden"
       id="section-find"
     >
       <div class="grid-2">
-        <!-- By ID -->
         <div class="panel">
           <div class="panel-header">
-            <span class="panel-title">
-              <span class="method-badge badge-get">GET</span> Find by ID
-            </span>
-            <span class="endpoint-tag">GET /employee/{id}</span>
+            <span class="panel-title"><span class="method-badge badge-get">GET</span> Find by ID</span>
           </div>
           <div class="panel-body">
             <div class="form-row">
-              <label>Employee ID</label>
-              <div class="form-inline">
+              <label>ID</label>
+              <div style="display:flex;gap:10px;">
                 <input
                   id="find-id-input"
-                  placeholder="e.g. 42"
                   type="number"
                 />
                 <button
@@ -737,26 +622,20 @@
             <div
               class="response-box idle"
               id="find-id-result"
-            >// response will appear here
+            >// response
             </div>
           </div>
         </div>
-
-        <!-- By Name -->
         <div class="panel">
           <div class="panel-header">
-            <span class="panel-title">
-              <span class="method-badge badge-get">GET</span> Find by Name
-            </span>
-            <span class="endpoint-tag">GET /employee/search?name=</span>
+            <span class="panel-title"><span class="method-badge badge-get">GET</span> Find by Name</span>
           </div>
           <div class="panel-body">
             <div class="form-row">
               <label>Name</label>
-              <div class="form-inline">
+              <div style="display:flex;gap:10px;">
                 <input
                   id="find-name-input"
-                  placeholder="e.g. Anna"
                   type="text"
                 />
                 <button
@@ -769,14 +648,13 @@
             <div
               class="response-box idle"
               id="find-name-result"
-            >// response will appear here
+            >// response
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- === CREATE === -->
     <div
       class="hidden"
       id="section-create"
@@ -786,17 +664,13 @@
         style="max-width:520px;"
       >
         <div class="panel-header">
-          <span class="panel-title">
-            <span class="method-badge badge-post">POST</span> Create Employee
-          </span>
-          <span class="endpoint-tag">POST /employee/create</span>
+          <span class="panel-title"><span class="method-badge badge-post">POST</span> Create Employee</span>
         </div>
         <div class="panel-body">
           <div class="form-row">
             <label>Full Name</label>
             <input
               id="create-name"
-              placeholder="e.g. Maria Schmidt"
               type="text"
             />
           </div>
@@ -804,7 +678,6 @@
             <label>Salary (€)</label>
             <input
               id="create-salary"
-              placeholder="e.g. 55000"
               type="number"
             />
           </div>
@@ -816,13 +689,63 @@
           <div
             class="response-box idle"
             id="create-result"
-          >// response will appear here
+          >// response
           </div>
         </div>
       </div>
     </div>
 
-    <!-- === DELETE === -->
+    <div
+      class="hidden"
+      id="section-update"
+    >
+      <div
+        class="panel"
+        style="max-width:520px;"
+      >
+        <div class="panel-header">
+          <span class="panel-title"><span class="method-badge badge-put">PUT</span> Update Employee #<span id="update-id-label">0</span></span>
+        </div>
+        <div class="panel-body">
+          <input
+            id="update-id"
+            type="hidden"
+          >
+          <div class="form-row">
+            <label>Full Name</label>
+            <input
+              id="update-name"
+              type="text"
+            />
+          </div>
+          <div class="form-row">
+            <label>Salary (€)</label>
+            <input
+              id="update-salary"
+              type="number"
+            />
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button
+              class="btn btn-accent btn-full"
+              onclick="updateEmployee()"
+            >Save Changes
+            </button>
+            <button
+              class="btn btn-ghost btn-full"
+              onclick="showSection('all')"
+            >Cancel
+            </button>
+          </div>
+          <div
+            class="response-box idle"
+            id="update-result"
+          >// response
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div
       class="hidden"
       id="section-delete"
@@ -832,18 +755,14 @@
         style="max-width:480px;"
       >
         <div class="panel-header">
-          <span class="panel-title">
-            <span class="method-badge badge-delete">DELETE</span> Delete Employee
-          </span>
-          <span class="endpoint-tag">DELETE /employee/{id}</span>
+          <span class="panel-title"><span class="method-badge badge-delete">DELETE</span> Delete Employee</span>
         </div>
         <div class="panel-body">
           <div class="form-row">
             <label>Employee ID</label>
-            <div class="form-inline">
+            <div style="display:flex;gap:10px;">
               <input
                 id="delete-id"
-                placeholder="e.g. 42"
                 type="number"
               />
               <button
@@ -856,92 +775,66 @@
           <div
             class="response-box idle"
             id="delete-result"
-          >// response will appear here
+          >// response
           </div>
         </div>
       </div>
     </div>
 
-    <!-- === DOCS === -->
     <div
       class="hidden"
       id="section-docs"
     >
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">⬡ API Reference</span>
-          <span class="api-badge">EmployeeResource.java</span>
-        </div>
+          <span class="panel-title">⬡ API Reference</span></div>
         <div class="panel-body">
           <table>
             <thead>
               <tr>
                 <th>Method</th>
                 <th>Path</th>
-                <th>Params</th>
                 <th>Description</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td><span class="method-badge badge-get">GET</span></td>
-                <td><code>/employee</code></td>
-                <td>—</td>
+                <td>/employee</td>
                 <td>Returns all employees</td>
               </tr>
               <tr>
-                <td><span class="method-badge badge-get">GET</span></td>
-                <td><code>/employee/{id}</code></td>
-                <td>@PathParam id</td>
-                <td>Find employee by ID</td>
-              </tr>
-              <tr>
-                <td><span class="method-badge badge-get">GET</span></td>
-                <td><code>/employee/search</code></td>
-                <td>@QueryParam name</td>
-                <td>Find employee by name</td>
+                <td><span class="method-badge badge-put">PUT</span></td>
+                <td>/employee/{id}</td>
+                <td>Updates an existing employee</td>
               </tr>
               <tr>
                 <td><span class="method-badge badge-post">POST</span></td>
-                <td><code>/employee/create</code></td>
-                <td>id, name, salary (form)</td>
-                <td>Create new employee</td>
-              </tr>
-              <tr>
-                <td><span class="method-badge badge-delete">DELETE</span></td>
-                <td><code>/employee/{id}</code></td>
-                <td>@PathParam id</td>
-                <td>Delete employee by ID</td>
+                <td>/employee/create</td>
+                <td>Creates a new employee</td>
               </tr>
             </tbody>
           </table>
-          <div style="margin-top:20px;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--muted);">
-            <strong style="color:var(--accent);">Content-Type:</strong> application/json (GET/DELETE) &nbsp;|&nbsp;
-            <strong style="color:var(--accent2);">Content-Type:</strong> application/x-www-form-urlencoded (POST)
-            <br /><br />
-            <strong style="color:var(--text);">Base URL:</strong> &nbsp;Set in the top right input field.
-          </div>
         </div>
       </div>
     </div>
-
   </div>
 </main>
 
-<!-- Toast -->
 <div id="toast"></div>
 
 <script>
   const BASE = () => document.getElementById('base-url-input').value.replace(/\/$/, '');
+  const AUTH = () => btoa("admin:password123");
 
-  /* --- Navigation --- */
-  const sections = ['all', 'find', 'create', 'delete', 'docs'];
+  const sections = ['all', 'find', 'create', 'delete', 'docs', 'update'];
   const titles = {
     all: 'All Employees',
     find: 'Find Employee',
     create: 'Create Employee',
     delete: 'Delete Employee',
-    docs: 'API Docs'
+    docs: 'API Docs',
+    update: 'Edit Employee'
   };
 
   function showSection(name) {
@@ -949,154 +842,169 @@
     document.getElementById('section-' + name).classList.remove('hidden');
     document.getElementById('page-title').textContent = titles[name];
     document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-    event.currentTarget.classList.add('active');
     if (name === 'all') loadAll();
   }
 
-  /* --- Toast --- */
   function toast(msg, ok = true) {
     const t = document.getElementById('toast');
     t.innerHTML = `<span style="color:${ok ? 'var(--accent)' : 'var(--danger)'}">●</span> ${msg}`;
     t.style.display = 'flex';
-    clearTimeout(t._timer);
-    t._timer = setTimeout(() => t.style.display = 'none', 3000);
+    setTimeout(() => t.style.display = 'none', 3000);
   }
 
-  /* --- Set response box --- */
   function setBox(id, data, ok = true) {
     const box = document.getElementById(id);
     box.textContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
     box.className = 'response-box ' + (ok ? '' : 'error');
   }
 
-  /* --- Stats --- */
   function updateStats(employees) {
     document.getElementById('stat-total').textContent = employees.length;
     if (employees.length) {
       const avg = Math.round(employees.reduce((a, e) => a + (e.salary || 0), 0) / employees.length);
       document.getElementById('stat-avg').textContent = '€' + avg.toLocaleString();
-    } else {
-      document.getElementById('stat-avg').textContent = '—';
     }
   }
 
-  /* --- Load All --- */
   async function loadAll() {
     const tbody = document.getElementById('employee-table-body');
-    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:28px;">Loading<span class="loader"></span></td></tr>`;
+    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;">Loading<span class="loader"></span></td></tr>`;
     try {
-      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee`);
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee`, {
+        headers: {'Authorization': `Basic ${AUTH()}`}
+      });
       document.getElementById('stat-status').textContent = res.status;
-      if (!res.ok) throw new Error('HTTP ' + res.status);
       const employees = await res.json();
       updateStats(employees);
-      if (!employees.length) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:28px;">No employees found</td></tr>`;
-        return;
-      }
       tbody.innerHTML = employees.map(e => `
         <tr>
-          <td><span class="id-chip">#${e.id}</span></td>
+          <td><span class="id-chip">#${e.ID}</span></td>
           <td>${e.name ?? '—'}</td>
           <td><span class="salary-chip">€${(e.salary ?? 0).toLocaleString()}</span></td>
           <td>
-            <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px;" onclick="quickDelete(${e.id})">✕ Remove</button>
+            <button class="btn btn-accent" style="font-size:11px;padding:6px 12px;" onclick="openUpdate(${e.ID}, '${e.name}', ${e.salary})">✎ Edit</button>
+            <button class="btn btn-ghost" style="font-size:11px;padding:6px 12px;" onclick="quickDelete(${e.ID})">✕</button>
           </td>
         </tr>
       `).join('');
-      toast(`Loaded ${employees.length} employees`);
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--danger);padding:28px;">Error: ${err.message}</td></tr>`;
-      toast(err.message, false);
+      tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:var(--danger);">Error loading data.</td></tr>`;
     }
   }
 
-  /* --- Find by ID --- */
+  function openUpdate(id, name, salary) {
+    showSection('update');
+    document.getElementById('update-id').value = id;
+    document.getElementById('update-id-label').textContent = id;
+    document.getElementById('update-name').value = name;
+    document.getElementById('update-salary').value = salary;
+  }
+
+  async function updateEmployee() {
+    const id = document.getElementById('update-id').value;
+    const body = new URLSearchParams({
+      name: document.getElementById('update-name').value.trim(),
+      salary: document.getElementById('update-salary').value.trim()
+    });
+    setBox('update-result', 'Updating…');
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Basic ${AUTH()}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
+      });
+      const data = await res.json().catch(() => ({}));
+      setBox('update-result', data, res.ok);
+      if (res.ok) {
+        toast('Updated!');
+        setTimeout(() => showSection('all'), 1000);
+      }
+    } catch (e) {
+      setBox('update-result', e.message, false);
+    }
+  }
+
   async function findById() {
     const id = document.getElementById('find-id-input').value.trim();
-    if (!id) return toast('Enter an ID', false);
-    setBox('find-id-result', 'Loading…');
+    if (!id) return;
     try {
-      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`);
-      document.getElementById('stat-status').textContent = res.status;
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {headers: {'Authorization': `Basic ${AUTH()}`}});
       const data = await res.json().catch(() => ({}));
       setBox('find-id-result', data, res.ok);
-      toast(res.ok ? `Found employee #${id}` : `Not found (${res.status})`, res.ok);
     } catch (e) {
       setBox('find-id-result', e.message, false);
-      toast(e.message, false);
     }
   }
 
-  /* --- Find by Name --- */
   async function findByName() {
     const name = document.getElementById('find-name-input').value.trim();
-    if (!name) return toast('Enter a name', false);
-    setBox('find-name-result', 'Loading…');
+    if (!name) return;
     try {
-      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/search?name=${encodeURIComponent(name)}`);
-      document.getElementById('stat-status').textContent = res.status;
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/search?name=${encodeURIComponent(name)}`, {headers: {'Authorization': `Basic ${AUTH()}`}});
       const data = await res.json().catch(() => ({}));
       setBox('find-name-result', data, res.ok);
-      toast(res.ok ? `Found: ${name}` : `Not found (${res.status})`, res.ok);
     } catch (e) {
       setBox('find-name-result', e.message, false);
-      toast(e.message, false);
     }
   }
 
-  /* --- Create --- */
   async function createEmployee() {
-    const name = document.getElementById('create-name').value.trim();
-    const salary = document.getElementById('create-salary').value.trim();
-    if (!name || !salary) return toast('Fill all fields', false);
-
-    setBox('create-result', 'Sending…');
-    const body = new URLSearchParams({name, salary});
+    const body = new URLSearchParams({
+      name: document.getElementById('create-name').value.trim(),
+      salary: document.getElementById('create-salary').value.trim()
+    });
     try {
       const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/create`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body
+        headers: {
+          'Authorization': `Basic ${AUTH()}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body
       });
-      document.getElementById('stat-status').textContent = res.status;
       const data = await res.json().catch(() => ({}));
       setBox('create-result', data, res.ok);
-      toast(res.ok ? `Employee created ✓` : `Error ${res.status}`, res.ok);
+      if (res.ok) toast('Created!');
     } catch (e) {
       setBox('create-result', e.message, false);
-      toast(e.message, false);
     }
   }
 
-  /* --- Delete --- */
   async function deleteEmployee() {
     const id = document.getElementById('delete-id').value.trim();
-    if (!id) return toast('Enter an ID', false);
-    await doDelete(id, 'delete-result');
+    if (!id) return;
+    try {
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {
+        method: 'DELETE',
+        headers: {'Authorization': `Basic ${AUTH()}`}
+      });
+      const data = await res.json().catch(() => ({}));
+      setBox('delete-result', data, res.ok);
+      if (res.ok) toast(`Deleted #${id}`);
+    } catch (e) {
+      setBox('delete-result', e.message, false);
+    }
   }
 
   async function quickDelete(id) {
     if (!confirm(`Delete employee #${id}?`)) return;
-    await doDelete(id, null);
-    loadAll();
-  }
-
-  async function doDelete(id, boxId) {
-    if (boxId) setBox(boxId, 'Deleting…');
     try {
-      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {method: 'DELETE'});
-      document.getElementById('stat-status').textContent = res.status;
-      const data = await res.json().catch(() => ({}));
-      if (boxId) setBox(boxId, data, res.ok);
-      toast(res.ok ? `Employee #${id} deleted` : `Error ${res.status}`, res.ok);
+      const res = await fetch(`${BASE()}/websevices_war_exploded/api/employee/${id}`, {
+        method: 'DELETE',
+        headers: {'Authorization': `Basic ${AUTH()}`}
+      });
+      if (res.ok) {
+        toast(`Deleted #${id}`);
+        loadAll();
+      }
     } catch (e) {
-      if (boxId) setBox(boxId, e.message, false);
       toast(e.message, false);
     }
   }
 
-  // Load on startup
   loadAll();
 </script>
 </body>

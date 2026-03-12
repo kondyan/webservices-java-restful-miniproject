@@ -1,5 +1,7 @@
 package org.example.websevices.resource;
 
+import jakarta.annotation.security.PermitAll;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
@@ -17,6 +19,7 @@ public class EmployeeResource {
 
   @GET
   @Path("/{id}")
+  @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
   public Response findById(@PathParam("id") Long id) {
     return employeeRepository.findById(id)
@@ -28,6 +31,7 @@ public class EmployeeResource {
   }
 
   @GET
+  @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
   public Response findAll() {
     List<Employee> employees = employeeRepository.findAll();
@@ -37,6 +41,7 @@ public class EmployeeResource {
 
   @GET
   @Path("/search")
+  @PermitAll
   @Produces(MediaType.APPLICATION_JSON)
   public Response findByName(@QueryParam("name") String name) {
     return employeeRepository.findByName(name)
@@ -49,6 +54,7 @@ public class EmployeeResource {
 
   @POST
   @Path("/create")
+  @RolesAllowed("ADMIN")
   @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
   public Response create(@FormParam("name") String name, @FormParam("salary") Integer salary) {
     Employee employee = new Employee(name, salary);
@@ -59,7 +65,26 @@ public class EmployeeResource {
                    .build();
   }
 
+  @PUT
+  @Path("/{id}")
+  @RolesAllowed("ADMIN")
+  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+  @Produces(MediaType.APPLICATION_JSON)
+  public Response update(@PathParam("id") Long id, @FormParam("name") String name, @FormParam("salary") Integer salary) {
+    return employeeRepository.findById(id)
+                             .map(employee -> {
+                               employee.setName(name);
+                               employee.setSalary(salary);
+                               employeeRepository.save(employee);
+                               return Response.ok(employee)
+                                              .build();
+                             })
+                             .orElse(Response.status(Response.Status.NOT_FOUND)
+                                             .build());
+  }
+
   @DELETE
+  @RolesAllowed("ADMIN")
   @Path("/{id}")
   public Response delete(@PathParam("id") Long id) {
     return employeeRepository.findById(id)
